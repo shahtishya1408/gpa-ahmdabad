@@ -25,14 +25,15 @@ def ensure_attendance_csv():
     if not os.path.exists(ATTENDANCE_CSV):
         with open(ATTENDANCE_CSV, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["name", "timestamp", "status"])
+            w.writerow(["name", "timestamp", "status" ,"date"])
 
 def mark_attendance(name, status="Present"):
     ensure_attendance_csv()
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    datetoday = datetime.now().strftime("%Y-%m-%d")
     with open(ATTENDANCE_CSV, "a", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow([name, ts, status])
+        w.writerow([name, ts, status , datetoday])
 
 # ------------- Student Form + Photo Samples -------------
 class StudentApp(Frame):
