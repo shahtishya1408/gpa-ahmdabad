@@ -1,3 +1,5 @@
+
+
 import os
 import csv
 import cv2
@@ -6,7 +8,7 @@ import numpy as np
 from datetime import datetime
 from tkinter import *
 from tkinter import ttk, messagebox
-
+import webbrowser
 # ------------- Paths and Model Setup -------------
 DATASET_DIR = "face_dataset"
 MODEL_PATH = "trainer.yml"
@@ -18,22 +20,23 @@ os.makedirs(DATASET_DIR, exist_ok=True)
 FACE_CASCADE = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 # Copyright text
-COPYRIGHT_TEXT = "\u00A9 2025 My Institute"  # e.g., © 2025 My Institute
+COPYRIGHT_TEXT = "\u00A9 2025 ALL RIGHT WII RESAREVED BY OWNER OF THE CODE AND OWNER OF THIS CODE IS SHAH TISHY ALPSHEBHAI "  # e.g., © 2025 My Institute
 
 # ------------- Attendance Helpers -------------
 def ensure_attendance_csv():
     if not os.path.exists(ATTENDANCE_CSV):
         with open(ATTENDANCE_CSV, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["name", "timestamp", "status" ,"date"])
+            w.writerow(["name", "timestamp", "status" ,"date" , "DEPARTMENT_CSV"])
 
 def mark_attendance(name, status="Present"):
     ensure_attendance_csv()
-    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ts = datetime.now().strftime(" %H:%M:%S")
     datetoday = datetime.now().strftime("%Y-%m-%d")
+    DEPARTMENT_CSV = "COMPUTER"
     with open(ATTENDANCE_CSV, "a", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow([name, ts, status , datetoday])
+        w.writerow([name, ts, status , datetoday , DEPARTMENT_CSV])
 
 # ------------- Student Form + Photo Samples -------------
 class StudentApp(Frame):
@@ -273,7 +276,10 @@ class FaceFunctions:
         cam.release()
         cv2.destroyAllWindows()
         messagebox.showinfo("Attendance", "No recognized faces within time limit.")
-
+def syllabuy():
+       webbrowser.open("https://www.gtu.ac.in/syllabus/new_diploma/sem-1/sem1_compile.pdf ")
+def pyq():
+        webbrowser.open ("https://gtu.ac.in/Download1.aspx")
 # ------------- Main Dashboard -------------
 class FaceRecognitionSystem(Tk, FaceFunctions):
     def __init__(self):
@@ -293,11 +299,11 @@ class FaceRecognitionSystem(Tk, FaceFunctions):
               font=("tahoma", 18, "bold"), bg="white", fg="red").place(x=0, y=0, width=sw, height=60)
 
         # Controls panel
-        panel = Frame(bg_frame, bg="white")
+        panel = Frame(bg_frame, bg="navy blue")
         panel.pack(pady=20)
 
         self.reg_name = StringVar()
-        Label(panel, text="Name:", font=("Arial", 12), bg="white").grid(row=0, column=0, padx=8, pady=8, sticky=E)
+        Label(panel, text="Name:", font=("Arial", 12),fg="red", bg="black").grid(row=0, column=0, padx=8, pady=8, sticky=E)
         Entry(panel, textvariable=self.reg_name, font=("Arial", 12), width=26).grid(row=0, column=1, padx=8, pady=8)
 
         Button(panel, text="Register Face", font=("Arial", 12, "bold"), bg="blue", fg="white",
@@ -312,15 +318,17 @@ class FaceRecognitionSystem(Tk, FaceFunctions):
                command=lambda: os.startfile(os.path.abspath(DATASET_DIR)) if os.name == "nt" else None).grid(row=0, column=6, padx=8, pady=8)
         Button(panel, text="Exit", font=("Arial", 12, "bold"), bg="red", fg="white",
                command=self.destroy).grid(row=0, column=7, padx=8, pady=8)
+        Button(panel, text="syllabuy ", font=("Arial", 12, "bold"),
+               command=syllabuy).grid(row=1, column=1, padx=8, pady=8)
+        Button(panel, text="pyq ", font=("Arial", 12, "bold"),
+               command=pyq).grid(row=1, column=3, padx=8, pady=8)
 
         # Info label
         Label(bg_frame, text="Workflow: 1) Register Face  2) Train Model  3) Face Attendance (auto; no key press) -> attendance.csv",
               font=("Arial", 12), bg="white", fg="gray").pack(pady=10)
 
         # Footer bar with ©
-        footer = Frame(self, bg="white")
-        footer.place(x=0, y=sh-28, width=sw, height=28)
-        Label(footer, text=COPYRIGHT_TEXT, font=("Arial", 10), bg="white", fg="gray").pack(side=RIGHT, padx=12)
+        Label(bg_frame, text=COPYRIGHT_TEXT, font=("Arial", 10), bg="white", fg="gray").pack( pady=15)
 
     def open_student_form(self):
         top = Toplevel(self)
@@ -328,5 +336,11 @@ class FaceRecognitionSystem(Tk, FaceFunctions):
 
 # ------------- Run -------------
 if __name__ == "__main__":
+    
     app = FaceRecognitionSystem()
+    app.attributes('-fullscreen', True)
+    Label(app, text="Press ESC to exit fullscreen", font=("Arial", 10), bg="white", fg="gray").place(x=10, y=10)
+    app.bind("<Escape>", lambda e: app.destroy())  
+  
     app.mainloop()
+    
