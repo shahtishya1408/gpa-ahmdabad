@@ -318,9 +318,9 @@ class FaceRecognitionSystem(Tk, FaceFunctions):
                command=lambda: os.startfile(os.path.abspath(DATASET_DIR)) if os.name == "nt" else None).grid(row=0, column=6, padx=8, pady=8)
         Button(panel, text="Exit", font=("Arial", 12, "bold"), bg="red", fg="white",
                command=self.destroy).grid(row=0, column=7, padx=8, pady=8)
-        Button(panel, text="syllabuy ", font=("Arial", 12, "bold"),
+        Button(panel, text="syllabus ", font=("Arial", 12, "bold"),
                command=syllabuy).grid(row=1, column=1, padx=8, pady=8)
-        Button(panel, text="pyq ", font=("Arial", 12, "bold"),
+        Button(panel, text="Previous Year Questions", font=("Arial", 12, "bold"),
                command=pyq).grid(row=1, column=3, padx=8, pady=8)
 
         # Info label
@@ -344,3 +344,4 @@ if __name__ == "__main__":
   
     app.mainloop()
     
+
