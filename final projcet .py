@@ -1,5 +1,3 @@
-
-
 import os
 import csv
 import cv2
@@ -27,13 +25,13 @@ def ensure_attendance_csv():
     if not os.path.exists(ATTENDANCE_CSV):
         with open(ATTENDANCE_CSV, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["name", "timestamp", "status" ,"date" , "DEPARTMENT_CSV"])
+            w.writerow(["name", "timestamp", "status" ,"date" , "DEPARTMENT"])
 
 def mark_attendance(name, status="Present"):
     ensure_attendance_csv()
     ts = datetime.now().strftime(" %H:%M:%S")
     datetoday = datetime.now().strftime("%Y-%m-%d")
-    DEPARTMENT_CSV = "COMPUTER"
+    DEPARTMENT_CSV = "COMPUTER" # after some function we can change it
     with open(ATTENDANCE_CSV, "a", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow([name, ts, status , datetoday , DEPARTMENT_CSV])
@@ -280,6 +278,10 @@ def syllabuy():
        webbrowser.open("https://www.gtu.ac.in/syllabus/new_diploma/sem-1/sem1_compile.pdf ")
 def pyq():
         webbrowser.open ("https://gtu.ac.in/Download1.aspx")
+def math_playlist():
+        webbrowser.open("https://www.youtube.com/playlist?list=PLygzxZFYe8Z1nmbDGtKgPEuaJbj3IqNmD")
+def physics_playlist():
+       webbrowser.open("https://www.youtube.com/playlist?list=PLygzxZFYe8Z0SK7hR1nKClHUBz1A7Zuyr")
 # ------------- Main Dashboard -------------
 class FaceRecognitionSystem(Tk, FaceFunctions):
     def __init__(self):
@@ -318,11 +320,14 @@ class FaceRecognitionSystem(Tk, FaceFunctions):
                command=lambda: os.startfile(os.path.abspath(DATASET_DIR)) if os.name == "nt" else None).grid(row=0, column=6, padx=8, pady=8)
         Button(panel, text="Exit", font=("Arial", 12, "bold"), bg="red", fg="white",
                command=self.destroy).grid(row=0, column=7, padx=8, pady=8)
-        Button(panel, text="syllabus ", font=("Arial", 12, "bold"),
-               command=syllabuy).grid(row=1, column=1, padx=8, pady=8)
+        Button(panel, text="syllabus  ", font=("Arial", 12, "bold"),
+               command= syllabuy).grid(row=1, column=1, padx=8, pady=8)
         Button(panel, text="Previous Year Questions", font=("Arial", 12, "bold"),
-               command=pyq).grid(row=1, column=3, padx=8, pady=8)
-
+               command=pyq).grid(row=1, column=2, padx=8, pady=8)
+        Button(panel, text="MATHS PLAYLIST ", font=("Arial", 12, "bold"),fg="red",bg="black",
+               command=math_playlist).grid(row=1, column=3, padx=8, pady=8)
+        Button(panel, text="MODEN Physics playlist", font=("Arial", 12, "bold"),fg="red",bg="black",
+               command=physics_playlist).grid(row=1, column=4, padx=8, pady=8)
         # Info label
         Label(bg_frame, text="Workflow: 1) Register Face  2) Train Model  3) Face Attendance (auto; no key press) -> attendance.csv",
               font=("Arial", 12), bg="white", fg="gray").pack(pady=10)
@@ -344,4 +349,3 @@ if __name__ == "__main__":
   
     app.mainloop()
     
-
